@@ -1,0 +1,337 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>L-EnsNMF</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="css/theme/lens_nmf.css">
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+					<p style="font-size:1.3em"> <strong>L-EnsNMF</strong>: Boosted Local Topic Discovery via <br>Ensemble of Nonnegative Matrix Factorization </p><br>
+					<p style="font-size:1.1em"> 
+						<!-- <strong>Sangho Suh</strong><sup>1</sup>, <span style="color:#b90504">Jaegul Choo</span><sup>1</sup>, <span style="color:cornflowerblue">Joonseok Lee</span><sup>2</sup>, <span style="color:darkorange">Chandan K. Reddy</span><sup>3</sup> <br>
+						<br> -->
+						Sangho Suh<sup>1</sup>, Jaegul Choo<sup>1</sup>, <br>Joonseok Lee<sup>2</sup>, Chandan K. Reddy<sup>3</sup>
+						<!-- <span style="color:darkred">Korea University</span> | <span style="color:cornflowerblue">Google Research</span> | <span style="color:darkorange">Virginia Tech</span> -->
+					<br><br>
+					</p>
+					<p style="font-size:0.9em">
+						<sup>1</sup>Korea University, <sup>2</sup>Google Research, <sup>3</sup>Virginia Tech
+						<br>
+						<strong style='color:lightblue'>August 19-25, 2017 @ Melbourne, Australia</strong>
+
+					</p>	
+
+<!-- 
+						<sup>1</sup><img src="img/korea_univ.png" style="width:8%"><sup>2</sup><img src="img/google_research.png" style="width:38%;margin-right:12px; margin-left:8px"><sup>3</sup><img src="img/virginia_tech.png" style="width:30%"> -->
+				</section>
+	<!-- 				<section>
+						<h3>Table of Contents</h3>
+						<br>
+						<ul>
+							<li>Motivation</li>
+							<li>Proposed Method</li>
+							<li>Conclusion</li>	
+						</ul>			
+						<br>
+				    </section> -->
+				<section>
+					<section data-transition="convex">
+						<h3>Motivation</h3>
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Topic Modeling</strong></span>
+						<img src="./img/topic_modeling.png" alt="Global Topic Modeling">
+					</section>					
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Global Topic Discovery</strong></span>
+						<img src="./img/global_topic_modeling.png" alt="Global Topic Modeling">
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Global vs. Local Topic</strong></span><br>
+						<img src="./img/motivation.png" alt="motivation">
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Example</strong></span><br><br>
+						<img src="./img/motivation2.png" alt="Second Motivation Example">
+						<p style="font-size:1em">
+							Sampled topics from papers containing keywords, '<strong style="color:black">dimension</strong>' or '<strong style="color:black">reduction</strong>'<br>
+						</p>
+					</section>					
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Problem</strong></span><br><br>
+						Existing topic modeling algorithms provide users with <br><strong style="color:red">global topics</strong> that give <strong style="color:red">general</strong>, <strong style="color:red">redundant</strong> information
+					</section>					
+					<section data-transition="convex">
+						<p style="font-size:1.3em">
+						<span style="font-size:1.3em"><strong style="color:black">Proposed Idea</strong></span><br><br>
+							<strong style="color:#0485b9">Local topic discovery</strong> to extract <br>
+							more specific, informative topics							
+						</p>
+					</section>					
+<!-- 					<section>
+						<img src="./img/problem.png" alt="problem">
+						<p style="font-size:0.7em">
+							Sampled topics from papers containing keywords, ‘<strong>dimension</strong>’ or ‘<strong>reduction</strong>’	
+						</p>						
+					</section>    
+					<section>						
+						<img src="./img/problem.png" alt="problem">
+						<p style="font-size:0.7em">
+							They return <strong style="color:black">redundant</strong>, <strong style="color:black">uninformative</strong> keywords, such as <br> '<strong>multi dimension</strong>,' '<strong>dimension reduct</strong>,' '<strong>high dimension</strong>'						
+						</p>
+					</section>   	 -->				
+
+				</section> 
+				<section>
+					<section data-transition="convex">
+						<h3> Proposed Method<br>(Intuition)</h3>
+					</section>
+					<section data-transition="fade">
+						<img src="./img/demo1.png" alt="Demo1">
+					</section>
+					<section data-transition="fade">
+						<img src="./img/demo2.png" alt="Demo2">
+					</section>
+					<section data-transition="fade">
+						<img src="./img/demo3.png" alt="Demo3">
+					</section>
+					<section data-transition="fade">
+						<img src="./img/demo_final.png" alt="Demo Final">
+					</section>
+					<section data-transition="convex">
+						<img src="./img/intuition.png" alt="LEnsNMF">
+						<br>
+						<p style="text-align:left; font-size:1.1em">
+							<span class="fragment fade-in" data-fragment-index="1">For local topic discovery,</span> <br>
+							<span class="fragment fade-in" data-fragment-index="2"> 1) Iterate </span> <span class="fragment fade-in" data-fragment-index="4"> -> <strong style="color:black" >Ensemble</strong></span> <br>
+							<span class="fragment fade-in" data-fragment-index="3"> 2) Boost & Suppress <span class="fragment fade-in" data-fragment-index="5"> -> <strong style="color:black" >Local weighting scheme</strong></span> </span>	
+							<br>
+							<span class="fragment fade-in" style="font-size:1.1em" data-fragment-index="6"> => Localized Ensemble of Nonnegative Matrix Factorization(<strong>L-EnsNMF</strong>)</span>	
+						</p>
+					</section>					
+				</section>
+				<section>
+					<section data-transition="convex">
+						<h3>Proposed Method<br>(Details)</h3>
+					</section>
+<!-- 					<section>					
+					    <p style="font-size:1.4em">Two approaches</p>
+					    <br>
+					    <p class="fragment shrink" data-fragment-index="1">1. Probabilistic (e.g. LDA)</p>
+					    <p class="fragment highlight-blue" data-fragment-index="1">2. Mathematical (e.g. NMF)</p>
+					</section>				 -->			
+<!-- 					<section>
+						<span style="font-size:1.3em"><strong style="color:black">NMF for Topic Modeling</strong></span>
+						<img src="./img/nmf.png" alt="NMF for topic modeling" style="width:55%"><br>
+						<img class="fragment fade-in" src="./img/arrow-down.png" style="width:2%"><br>
+						<img class="fragment fade-in" src="./img/nmf_for_topic_modeling.png" style="width:25%">
+					</section>			 -->			
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Overview of <strong>L-EnsNMF</strong></strong></span><br>
+						<img src="./img/overview.png" alt="Overview" style="width:90%">
+						<p style="text-align:left; font-size:0.9em">
+							<span class="fragment fade-in" data-fragment-index="1"> 1) NMF Topic Modeling <br><span class="fragment fade-in" data-fragment-index="2">-> <strong style="color:#0485b9">Find a set of topics</strong></span> </span><br>
+							<span class="fragment fade-in" data-fragment-index="3"> 2) Residual Update </span> <br><span class="fragment fade-in" data-fragment-index="4"> -> <strong style="color:#0485b9"">Identify unexplained parts</strong> (e.g. egyptian cat) <strong style="color:#0485b9""></strong></span> 
+							<br>
+							<span class="fragment fade-in" data-fragment-index="5"> 3) Anchor Sampling & Local Weighting <span class="fragment fade-in" data-fragment-index="6"> <br>-> <strong style="color:#0485b9">Reveal unexplained parts and suppress explained parts</strong></span> </span>
+						</p>
+					</section>	
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Nonnegative Matrix Factorization (NMF) 
+						<br> Topic Modeling	
+						</br></strong></span>
+						<img src="./img/nmf.png" alt="NMF for topic modeling">
+						<br>
+						where [ <ul><li></li></ul>]<sub>+</sub> converts every negative element to zero
+					</section>								
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Residual Update</strong></span><br><br>
+						<strong style="color:black">Identify</strong> unexplained parts using residual matrix, R
+						<br><br>
+						<img src="img/residual_matrix.png">
+						'<strong style="color:black">overexplained</strong>' parts (i.e., negative values) => zero
+						<!-- Residual values represent <strong style="color:black">unexplained</strong> parts -->
+					</section>							
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Anchor Sampling</strong></span><br><br>
+						<strong style="color:black">Sample</strong> unexplained document(<em>col</em>) & keyword(<em>row</em>)
+						<br>
+						<img src="img/anchor_sampling.png">
+					</section>												
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Local Weighting</strong></span><br><br>
+						<strong style="color:black">Reveal</strong> <strong style="color:#0485b9">local topics</strong> & <strong style="color:black">suppress</strong> <strong style="color:red">global topics</strong>
+						<br>						
+						<img src="img/local_weighting.png">
+						<br>
+						by localizing residual matrix, <strong style="color:black">R</strong>, and get <strong style="color:black">R<sub>L</sub></strong>
+					</section>															
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Ensemble</strong></span><br><br>
+						Use <strong style="color:black">R<sub>L</sub></strong> as an input to NMF topic modeling in the next stage<br><br>
+						<img src="./img/overview2.PNG" style="width:80%">
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Why NMF on Residual Matrices (1)</strong></span><br><br>
+						<img src="./img/synth_k2.png" alt="Synthetic Example">
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Why NMF on Residual Matrices (2)</strong></span><br><br>
+						<img src="./img/deflation.png" style="width:60%" alt="Synthetic Example">
+						<br>
+						<span style="font-size:0.9em">Deflation-based method helps to reveal <br>highly non-redundant, diverse topics</span>
+					</section>					
+					<section data-transition="convex">
+					<span style="font-size:1.3em"><strong style="color:black">Fast rank-2 NMF (Speed)</strong></span><br><br>
+						Exhaustive search for an <br>optimal active/passive set partitioning</strong><br>
+						<img src="./img/fast-rank2.png" alt="Fast rank-2" style="width:65%">
+					</section>					
+				</section>
+				<section>
+					<section data-transition="convex">
+						<h3> Evaluation </h3>
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Datasets</strong></span><br><br>						
+						<ol style="font-size:0.9em">
+							<li><strong style="color:black">Reuters</strong>: Articles from the Reuters newswire in 1987</li>
+							<li>20 Newsgroups (<strong style="color:black">20News</strong>): Newsgroup documents from <br>Usenet newsgroups</li>
+							<li><strong style="color:black">Enron</strong>: 2,000 randomly sampled emails from <br>Enron Corporation</li>
+							<li>IEEE-Vis (<strong style="color:black">VisPub</strong>): Academic papers published in <br>IEEE Visualization conferences</li>
+							<li><strong style="color:black">Twitter</strong>: 2,000 randomly selected tweets generated from <br>New York City in June 2013</li>
+						</ol>
+						<img src="./img/dataset.png" alt="dataset" style="width:60%">
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.2em"><strong style="color:black">Baseline Methods</strong></span><br><br>
+						<ol style="font-size:1.1em">
+							<li>Standard NMF (<strong style="color:black">StdNMF</strong>)</li>
+							<li>Sparse NMF (<strong style="color:black">SprsNMF</strong>)</li>
+							<li>Orthogonal NMF (<strong style="color:black">OrthNMF</strong>)</li>
+							<li>Latent Dirichlet Allocation (<strong style="color:black">LDA</strong>)</li>
+						</ol>
+					</section>
+					<section data-transition="convex">
+						<h3> Quantitative <br>Evaluation </h3>
+					</section>					
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Topic Coherence</strong></span><br><br>
+						<strong>L-EnsNMF</strong> generates topics of high-quality regardless of<br>the number of topics and datasets
+						<img src="./img/topic_coherence1.png" style="width:100%" alt="Topic Coherence"><br>
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Total Document Coverage</strong></span><br><br>
+						Topics by <strong>L-EnsNMF</strong> become more and more diverse <br>as the number of topics increases
+						<img src="./img/total_doc_cvrg.png" style="width:90%" alt="Total Document Coverage">
+					</section>							
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Computing Time</strong></span><br><br>
+						<strong>L-EnsNMF</strong> is the fastest and the most scalable<br>
+						<img src="./img/computing_time.png" alt="Computing Time" style="width:70%"><br>
+					</section>		
+					<section data-transition="convex">
+						<h3> Qualitative <br>Topic Example </h3>
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Local Topic Discovery</strong></span><br>
+						<p style="font-size:0.8em">
+							 We generated 100 topics (10 keywords each) but only <strong>L-EnsNMF</strong> extracted local, specific keywords, e.g., ‘<strong style="color:black">hurrican</strong>’, ‘<strong style="color:black">sandi</strong>’, ‘<strong style="color:black">ireland</strong>.’
+						</p>
+						<img src="./img/local_topic_discovery.png" alt="Qualitative Experiment">
+						<p style="font-size:0.8em">Dataset: Twitter (New York City in June 2013)</p>
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em"><strong style="color:black">Local Topic Discovery</strong></span><br><br>
+						<p style="font-size:1em">
+							Ireland football team visited New York City in June 2013 <br>to boost a community hit by Hurricane Sandy in 2012
+						</p>
+						<!-- <p style="font-size:0.75em">
+							A search for related web documents with the query ‘<strong style="color:black">hurricane sandy ireland</strong>’ led to the <strong style="color:black">discovery of the local news</strong> that the Ireland football team visited New York City in June 2013 to boost a community hit by Hurricane Sandy in 2012		
+						</p>					 -->	
+						<img src="./img/qualitative_exp_ex.png" alt="Example for Qualitative Experiment">
+					</section>
+
+				</section>		
+				<section>
+						<section data-transition="convex">
+							<h3>Future Work</h3>
+						</section>
+						<section data-transition="convex">
+							<span style="font-size:1.3em"><strong style="color:black">Interactive Topic Discovery System</strong></span><br><br>
+							<img src="./img/utopian.png" alt="UTOPIAN" style="width:80%"><br>
+							Steer local weighting process to reflect <br>user's subjective interest and task goals
+						</section>
+					</section>	
+				<section>
+					<section data-transition="convex">
+						<h3>Conclusion</h3>
+					</section>
+					<section data-transition="convex">
+						<span style="font-size:1.3em">
+							<span style="font-size:1.3em"><strong style="color:black">Summary</strong></span><br><br>
+							<ul>
+								<li class="fragment fade-in" data-fragment-index="1"><strong style="color=black">L-EnsNMF</strong> discovers <span class="fragment highlight" data-fragment-index="2">local</span>, <span class="fragment highlight" data-fragment-index="3">focused</span> topics of interest to users</li>
+								<li class="fragment fade-in" data-fragment-index="4">Compared to existing topic modeling algorithms, it generates topics <span class="fragment fade-in fragment highlight" data-fragment-index="5">of higher quality</span><span class="fragment fade-in" data-fragment-index="5">,</span> <span class="fragment fade-in fragment highlight" data-fragment-index="6">higher document coverage</span> <span class="fragment fade-in fragment highlight" data-fragment-index="7">at faster speed</span></li>
+							</ul>
+						</span>
+					</section>
+				</section>							
+				<section>
+					<p style="font-size:2.6em">Thank you</p>
+					<p style="font-size:1.3em"> Questions? </p>
+					<p style="font-size:0.7em"> <strong style="color:black">E-mail</strong>: jchoo@korea.ac.kr </p>
+					<p style="font-size:0.7em"> <strong style="color:black">Code</strong>: https://github.com/sanghosuh/lens_nmf-matlab </p>
+					<img src="./img/last_slide.png" style="width:55%" alt="Overview">
+				</section>
+			</div>
+
+
+			<div class="footer">
+<!-- 			<div style="text-align:left; float:left; width:15%; margin-left:2%; margin-top:1%">
+					<img src="./img/slide_url_address.png">
+			</div> -->
+			<div style="text-align:right; float:right; width:20%; margin-right:0%; margin-top:0%">
+					<img src="./img/slide_url_address.png">
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				history: true,
+
+				// More info https://github.com/hakimel/reveal.js#dependencies
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+				]
+			});
+		</script>
+	</body>
+</html>
