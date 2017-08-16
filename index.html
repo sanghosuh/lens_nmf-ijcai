@@ -27,7 +27,7 @@
 		<div class="reveal">
 			<div class="slides">
 				<section>
-					<p style="font-size:1.3em"> <strong>L-EnsNMF</strong>: Boosted Local Topic Discovery via <br>Ensemble of Nonnegative Matrix Factorization </p><br>
+					<p style="font-size:1.3em"> Local Topic Discovery via Boosted Ensemble of Nonnegative Matrix Factorization</p><br>
 					<p style="font-size:1.1em"> 
 						<!-- <strong>Sangho Suh</strong><sup>1</sup>, <span style="color:#b90504">Jaegul Choo</span><sup>1</sup>, <span style="color:cornflowerblue">Joonseok Lee</span><sup>2</sup>, <span style="color:darkorange">Chandan K. Reddy</span><sup>3</sup> <br>
 						<br> -->
@@ -39,6 +39,8 @@
 						<sup>1</sup>Korea University, <sup>2</sup>Google Research, <sup>3</sup>Virginia Tech
 						<br>
 						<strong style="color:#0485b9">August 19-25, 2017 @ Melbourne, Australia</strong>
+						<br><br>
+						<strong><p style="font-size:0.7em">*Invited to Sister Conference Best Paper Track as the ICDM'16 Best Student Paper</p></strong>
 
 					</p>	
 
@@ -122,12 +124,14 @@
 					<section data-transition="convex">
 						<img src="./img/intuition.png" alt="LEnsNMF">
 						<br>
-						<p style="text-align:left; font-size:1.1em">
+						<p style="text-align:left; font-size:1em">
 							<span class="fragment fade-in" data-fragment-index="1">For local topic discovery,</span> <br>
-							<span class="fragment fade-in" data-fragment-index="2"> 1) Iterate </span> <span class="fragment fade-in" data-fragment-index="4"> -> <strong style="color:black" >Ensemble</strong></span> <br>
+							<span class="fragment fade-in" data-fragment-index="2"> 1) Iterative Topic Modeling on Residual Matrix</span> <br><span class="fragment fade-in" data-fragment-index="4"> -> <strong style="color:black" >Ensemble</strong></span> <br>
 							<span class="fragment fade-in" data-fragment-index="3"> 2) Boost & Suppress <span class="fragment fade-in" data-fragment-index="5"> -> <strong style="color:black" >Local weighting scheme</strong></span> </span>	
 							<br>
-							<span class="fragment fade-in" style="font-size:1.1em" data-fragment-index="6"> => Localized Ensemble of Nonnegative Matrix Factorization(<strong>L-EnsNMF</strong>)</span>	
+							<p>
+							<span class="fragment fade-in" style="font-size:1.1em" data-fragment-index="6"> Localized Ensemble of <br>Nonnegative Matrix Factorization (<strong>L-EnsNMF</strong>)</span>	
+							</p>
 						</p>
 					</section>					
 				</section>
@@ -239,11 +243,13 @@
 						<span style="font-size:1.3em"><strong style="color:black">Topic Coherence</strong></span><br><br>
 						<strong>L-EnsNMF</strong> generates topics of high-quality regardless of<br>the number of topics and datasets
 						<img src="./img/topic_coherence1.png" style="width:100%" alt="Topic Coherence"><br>
+						<img src="./img/tpc_coherence_eq.png" style="width:55%" alt="Topic Coherence">
 					</section>
 					<section data-transition="convex">
 						<span style="font-size:1.3em"><strong style="color:black">Total Document Coverage</strong></span><br><br>
 						Topics by <strong>L-EnsNMF</strong> become more and more diverse <br>as the number of topics increases
-						<img src="./img/total_doc_cvrg.png" style="width:90%" alt="Total Document Coverage">
+						<img src="./img/total_doc_cvrg.png" style="width:70%" alt="Total Document Coverage">
+						<img src="./img/tot_doc_cvrg_eq.png" style="width:70%" alt="Total Document Coverage">
 					</section>							
 					<section data-transition="convex">
 						<span style="font-size:1.3em"><strong style="color:black">Computing Time</strong></span><br><br>
@@ -256,7 +262,7 @@
 					<section data-transition="convex">
 						<span style="font-size:1.3em"><strong style="color:black">Local Topic Discovery</strong></span><br>
 						<p style="font-size:0.8em">
-							 We generated 100 topics (10 keywords each) but only <strong>L-EnsNMF</strong> extracted local, specific keywords, e.g., ‘<strong style="color:black">hurrican</strong>’, ‘<strong style="color:black">sandi</strong>’, ‘<strong style="color:black">ireland</strong>.’
+							 We generated 100 topics (10 keywords each) using each different method, but only <strong>L-EnsNMF</strong> extracted local, specific keywords, <br>e.g., ‘<strong style="color:black">hurrican</strong>’, ‘<strong style="color:black">sandi</strong>’, ‘<strong style="color:black">ireland</strong>.’
 						</p>
 						<img src="./img/local_topic_discovery.png" alt="Qualitative Experiment">
 						<p style="font-size:0.8em">Dataset: Twitter (New York City in June 2013)</p>
